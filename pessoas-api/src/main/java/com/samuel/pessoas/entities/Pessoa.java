@@ -1,6 +1,7 @@
 package com.samuel.pessoas.entities;
 
 
+import com.samuel.pessoas.dto.PessoaDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,13 @@ public class Pessoa {
     private LocalDate dataNascimento;
     @OneToMany(mappedBy = "pessoa")
     private Set<Endereco> enderecos = new HashSet<>();
+
+    public Pessoa(PessoaDTO dto) {
+        this.id = dto.getId();
+        this.nomeCompleto = dto.getNomeCompleto();
+        this.dataNascimento = dto.getDataNascimento();
+        this.enderecos = dto.getEnderecos();
+    }
 
     public Endereco getEnderecoPrincipal() {
         return enderecos.stream()

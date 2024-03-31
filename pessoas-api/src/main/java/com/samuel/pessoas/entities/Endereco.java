@@ -1,5 +1,6 @@
 package com.samuel.pessoas.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,8 @@ public class Endereco {
     private String cidade;
     private String estado;
     private boolean principal;
+
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "pessoa_id")
     private Pessoa pessoa;
