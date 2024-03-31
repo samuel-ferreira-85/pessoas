@@ -1,5 +1,6 @@
 package com.samuel.pessoas.controllers;
 
+import com.samuel.pessoas.dto.EnderecoDTO;
 import com.samuel.pessoas.dto.PessoaDTO;
 import com.samuel.pessoas.services.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/pessoas")
@@ -40,8 +42,33 @@ public class PessoaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PessoaDTO> atualizar(@PathVariable Long id, @RequestBody PessoaDTO pessoaDTO) {
+    public ResponseEntity<PessoaDTO> atualizar(@PathVariable Long id,
+                                               @RequestBody PessoaDTO pessoaDTO) {
         PessoaDTO pessoa = service.update(pessoaDTO, id);
         return ResponseEntity.ok(pessoa);
+    }
+
+    @GetMapping("{id}/enderecos")
+    public ResponseEntity<List<EnderecoDTO>> listarEnderecos(@PathVariable Long id) {
+        return ResponseEntity.ok(service.findAllEnderecos(id));
+    }
+
+    @GetMapping("{id}/enderecos/{idEndereco}")
+    public ResponseEntity<EnderecoDTO> detalharEndereco(@PathVariable Long id,
+                                                        @PathVariable Long idEndereco) {
+        return ResponseEntity.ok(service.findEndereco(id, idEndereco));
+    }
+
+    @PostMapping("{id}/enderecos")
+    public ResponseEntity<PessoaDTO> inserirEndereco(@PathVariable Long id,
+                                                     @RequestBody EnderecoDTO enderecoDTO) {
+        return ResponseEntity.ok(service.inserirEndereco(id, enderecoDTO));
+    }
+
+    @PutMapping("{id}/enderecos/{idEndereco}")
+    public ResponseEntity<PessoaDTO> atualizarEndereco(@PathVariable Long id,
+                                                       @PathVariable Long idEndereco,
+                                                       @RequestBody EnderecoDTO enderecoDTO){
+        return ResponseEntity.ok(service.atualizarEndereco(id, idEndereco, enderecoDTO));
     }
 }

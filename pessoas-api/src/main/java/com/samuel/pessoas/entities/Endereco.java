@@ -1,12 +1,13 @@
 package com.samuel.pessoas.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.samuel.pessoas.dto.EnderecoDTO;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -28,7 +29,7 @@ public class Endereco {
     @JoinColumn(name = "pessoa_id")
     private Pessoa pessoa;
 
-    public Endereco(Long id, String logradouro, String cep, String numero, String cidade, String estado) {
+    public Endereco(Long id, String logradouro, String cep, String numero, String cidade, String estado, Pessoa pessoa) {
         this.id = id;
         this.logradouro = logradouro;
         this.cep = cep;
@@ -36,5 +37,22 @@ public class Endereco {
         this.cidade = cidade;
         this.estado = estado;
         principal = false;
+        this.pessoa = pessoa;
     }
+
+    public Endereco(EnderecoDTO enderecoDTO) {
+        id = enderecoDTO.getId();
+        logradouro = enderecoDTO.getLogradouro();
+        cep = enderecoDTO.getCep();
+        numero = enderecoDTO.getNumero();
+        cidade = enderecoDTO.getCidade();
+        estado = enderecoDTO.getEstado();
+        principal = enderecoDTO.isPrincipal();
+    }
+
+    @JsonProperty("pessoaId")
+    public Long getPessoaId() {
+        return pessoa != null ? pessoa.getId() : null;
+    }
+
 }

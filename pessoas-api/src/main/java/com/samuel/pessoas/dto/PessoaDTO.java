@@ -2,10 +2,7 @@ package com.samuel.pessoas.dto;
 
 import com.samuel.pessoas.entities.Endereco;
 import com.samuel.pessoas.entities.Pessoa;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.HashSet;
