@@ -6,7 +6,10 @@ import com.samuel.pessoas.entities.Endereco;
 import com.samuel.pessoas.entities.Pessoa;
 import com.samuel.pessoas.repositories.EnderecoRepository;
 import com.samuel.pessoas.repositories.PessoaRepository;
+import com.samuel.pessoas.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -38,8 +41,9 @@ public class PessoaService {
 
     @Transactional(readOnly = true)
     public PessoaDTO findById(Long id) {
-        Optional<Pessoa> pessoaOptional = pessoaRepository.findById(id);
-        return pessoaOptional.map(PessoaDTO::new).orElse(null);
+        var pessoa = pessoaRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Recurso não encontrado para ID informado."));
+        return new PessoaDTO(pessoa);
     }
 
     @Transactional
@@ -54,6 +58,7 @@ public class PessoaService {
     public PessoaDTO update(PessoaDTO pessoaDTO, Long id) {
         Pessoa pessoa = pessoaRepository.getReferenceById(id);
         BeanUtils.copyProperties(pessoaDTO, pessoa, "id", "enderecos");
+        pessoa = pessoaRepository.save(pessoa);
         return new PessoaDTO(pessoa);
     }
 
@@ -67,14 +72,16 @@ public class PessoaService {
         Endereco endereco = pessoa.getEnderecos().stream()
                 .filter(e -> e.getId() == idEndereco)
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new ResourceNotFoundException("Recurso não encontrado."));
         if (endereco == null) return null;
         return new EnderecoDTO(endereco);
     }
 
     @Transactional
     public PessoaDTO inserirEndereco(Long id, EnderecoDTO enderecoDTO) {
-        var pessoa = pessoaRepository.getReferenceById(id);
+        var pessoa = pessoaRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Recurso não encontrado para ID informado."));
         var endereco = new Endereco(enderecoDTO);
         endereco.setPessoa(pessoa);
         endereco = enderecoRepository.save(endereco);
