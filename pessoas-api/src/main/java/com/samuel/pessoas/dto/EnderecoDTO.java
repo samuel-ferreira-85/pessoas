@@ -22,6 +22,7 @@ public class EnderecoDTO {
     private String estado;
     @NotNull
     private boolean principal;
+    @NotNull
     private Long pessoaId;
 
     public EnderecoDTO(Endereco endereco) {
@@ -30,7 +31,7 @@ public class EnderecoDTO {
         cep = endereco.getCep();
         numero = endereco.getNumero();
         cidade = endereco.getCidade();
-        estado = endereco.getCidade();
+        estado = endereco.getEstado();
         principal = endereco.isPrincipal();
         pessoaId = endereco.getPessoaId();
     }

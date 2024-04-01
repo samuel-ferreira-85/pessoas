@@ -1,6 +1,5 @@
 package com.samuel.pessoas.controllers;
 
-import com.samuel.pessoas.dto.EnderecoDTO;
 import com.samuel.pessoas.dto.PessoaDTO;
 import com.samuel.pessoas.services.PessoaService;
 import jakarta.validation.Valid;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping("/pessoas")
@@ -49,27 +47,4 @@ public class PessoaController {
         return ResponseEntity.ok(pessoa);
     }
 
-    @GetMapping("{id}/enderecos")
-    public ResponseEntity<List<EnderecoDTO>> listarEnderecos(@PathVariable Long id) {
-        return ResponseEntity.ok(service.findAllEnderecos(id));
-    }
-
-    @GetMapping("{id}/enderecos/{idEndereco}")
-    public ResponseEntity<EnderecoDTO> detalharEndereco(@PathVariable Long id,
-                                                        @PathVariable Long idEndereco) {
-        return ResponseEntity.ok(service.findEndereco(id, idEndereco));
-    }
-
-    @PostMapping("{id}/enderecos")
-    public ResponseEntity<PessoaDTO> inserirEndereco(@PathVariable Long id,
-                                                     @RequestBody EnderecoDTO enderecoDTO) {
-        return ResponseEntity.ok(service.inserirEndereco(id, enderecoDTO));
-    }
-
-    @PutMapping("{id}/enderecos/{idEndereco}")
-    public ResponseEntity<PessoaDTO> atualizarEndereco(@PathVariable Long id,
-                                                       @PathVariable Long idEndereco,
-                                                       @RequestBody EnderecoDTO enderecoDTO){
-        return ResponseEntity.ok(service.atualizarEndereco(id, idEndereco, enderecoDTO));
-    }
 }
