@@ -1,6 +1,8 @@
 package com.samuel.pessoas.dto;
 
 import com.samuel.pessoas.entities.Endereco;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Getter
@@ -8,11 +10,17 @@ import lombok.*;
 @NoArgsConstructor
 public class EnderecoDTO {
     private Long id;
+    @NotBlank
     private String logradouro;
+    @NotBlank
     private String cep;
+
     private String numero;
+    @NotBlank
     private String cidade;
+    @NotBlank
     private String estado;
+    @NotNull
     private boolean principal;
     private Long pessoaId;
 

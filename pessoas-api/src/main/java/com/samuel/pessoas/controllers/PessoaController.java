@@ -3,6 +3,7 @@ package com.samuel.pessoas.controllers;
 import com.samuel.pessoas.dto.EnderecoDTO;
 import com.samuel.pessoas.dto.PessoaDTO;
 import com.samuel.pessoas.services.PessoaService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,7 +34,7 @@ public class PessoaController {
     }
 
     @PostMapping
-    public ResponseEntity<PessoaDTO> cadastrar(@RequestBody PessoaDTO pessoaDTO) {
+    public ResponseEntity<PessoaDTO> cadastrar(@Valid @RequestBody PessoaDTO pessoaDTO) {
         PessoaDTO pessoa = service.save(pessoaDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/{id}")
                 .buildAndExpand(pessoa.getId()).toUri();
