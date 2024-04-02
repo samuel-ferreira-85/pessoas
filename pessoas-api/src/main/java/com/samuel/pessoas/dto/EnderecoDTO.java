@@ -8,6 +8,8 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class EnderecoDTO {
     private Long id;
     @NotBlank
