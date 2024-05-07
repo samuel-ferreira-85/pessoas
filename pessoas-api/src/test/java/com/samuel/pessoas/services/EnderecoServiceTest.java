@@ -1,22 +1,15 @@
 package com.samuel.pessoas.services;
 
 import com.samuel.pessoas.dto.EnderecoDTO;
-import com.samuel.pessoas.dto.PessoaDTO;
 import com.samuel.pessoas.entities.Endereco;
-import com.samuel.pessoas.entities.Pessoa;
 import com.samuel.pessoas.repositories.EnderecoRepository;
 import com.samuel.pessoas.repositories.PessoaRepository;
 import com.samuel.pessoas.services.exceptions.ResourceNotFoundException;
 import com.samuel.pessoas.tests.Factory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
@@ -80,6 +73,8 @@ class EnderecoServiceTest {
         when(enderecoRepository.save(any(Endereco.class))).thenReturn(endereco);
         EnderecoDTO result = enderecoService.save(enderecoDTO);
 
+        assertNotNull(enderecoDTO);
+        assertNotNull(endereco);
         assertNotNull(result);
         assertEquals(enderecoDTO.getLogradouro(), result.getLogradouro());
         assertEquals(enderecoDTO.getNumero(), result.getNumero());

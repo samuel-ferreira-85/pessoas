@@ -73,6 +73,8 @@ class PessoaServiceTest {
         when(pessoaRepository.save(any(Pessoa.class))).thenReturn(pessoa);
         PessoaDTO result = pessoaService.save(pessoaDTO);
 
+        assertNotNull(pessoaDTO);
+        assertNotNull(pessoa);
         assertNotNull(result);
         assertEquals(pessoaDTO.getNomeCompleto(), result.getNomeCompleto());
         assertEquals(pessoaDTO.getDataNascimento(), result.getDataNascimento());

@@ -81,7 +81,7 @@ class PessoaControllerTest {
     }
 
     @Test
-    void cadastararShouldReturn400WhenBlankNomeCompleto() throws Exception {
+    void cadastrarShouldReturn400WhenBlankNomeCompleto() throws Exception {
         var dto = PessoaDTO.builder()
                 .id(null)
                 .nomeCompleto("")
@@ -99,11 +99,11 @@ class PessoaControllerTest {
     }
 
     @Test
-    void cadastararShouldReturn400WhenDataNascimentoPastDate() throws Exception {
+    void cadastrarShouldReturn400WhenDataNascimentoPastDate() throws Exception {
         var dto = PessoaDTO.builder()
                 .id(null)
                 .nomeCompleto("Samuel Ferreira")
-                .dataNascimento(LocalDate.of(2024, 4, 2))
+                .dataNascimento(LocalDate.of(2024, 6, 25))
                 .build();
 
         String jsonBody = objectMapper.writeValueAsString(dto);
@@ -117,7 +117,7 @@ class PessoaControllerTest {
     }
 
     @Test
-    void cadastararShouldReturn400WhenDataNascimentoIsNull() throws Exception {
+    void cadastrarShouldReturn400WhenDataNascimentoIsNull() throws Exception {
         var dto = PessoaDTO.builder()
                 .id(null)
                 .nomeCompleto("Samuel Ferreira")
